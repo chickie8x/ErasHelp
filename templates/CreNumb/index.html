@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-primary text-center m-auto">Tong hop</h1>
+        {% if data %}
+            <h4 class="text-primary text-center m-auto">Tong so to trinh: {{ count }}</h4>
+            <div class="wrapper col-lg-6 col-sm-12 m-auto">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Ten to trinh</th>
+                        <th scope="col">So to trinh</th>
+                        <th scope="col">Loai to trinh</th>
+                        <th scope="col">Nguoi tao</th>
+                        <th scope="col">Phong</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Ngay lay so</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tt in data %}
+                    <tr>
+                        <td>{{ tt.title }}</td>
+                        <td>{{ tt.identify }}</td>
+                        <td>{{ tt.type }}</td>
+                        <td>{{ tt.user }}</td>
+                        <td>{{ tt.department }}</td>
+                        <td>{{ tt.year }}</td>
+                        <td>{{ tt.createdTime }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div>
+                <h1>Khong co du lieu</h1>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

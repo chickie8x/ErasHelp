@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container-fluid">
-        <h1 class="text-primary text-center m-auto">Tổng hợp</h1>
-        {% if data %}
-            <h4 class="text-primary text-center mx-auto my-3">Tổng số tờ trình: {{ count }}</h4>
-            <div class="wrapper col-lg-6 col-sm-12 m-auto">
+    <div class="fluid-container">
+        <h1 class="text-primary text-center my-2">Tờ trình của phòng ban : <span class="text-success">{{ department }}</span></h1>
+        <div>
+            {% if filter %}
+               <div class="wrapper col-lg-6 col-sm-12 m-auto">
                 <table class="table">
                     <thead class="thead-light">
                     <tr>
@@ -19,7 +19,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for tt in data %}
+                    {% for tt in filter %}
                     <tr>
                         <td>{{ tt.title }}</td>
                         <td>{{ tt.identify }}</td>
@@ -32,11 +32,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
-        {% else %}
-            <div>
-                <h1>Khong co du lieu</h1>
-            </div>
-        {% endif %}
+            {% else %}
+                <p>has no data</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

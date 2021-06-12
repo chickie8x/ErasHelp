@@ -1,24 +1,112 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {% load static %}
     <title>Eras App</title>
-  </head>
-  <body>
+</head>
+<body>
+<div class="header">
+    {% if request.user.is_authenticated %}
+        <div class="header-wrapper d-flex bg-dark px-5">
+            <div class="my-nav d-flex">
+                <div class="home m-1">
+                    <a href="/" role="button" class="btn btn-primary">Home</a>
+                </div>
 
-    {% block content %}
-    {% endblock %}
+                <div class="dropdown m-1">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Departments
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for department in departments %}
+                            <a class="dropdown-item"
+                               href="{% url 'filter-by-department' department %}">{{ department }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+                <div class="dropdown m-1">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Years
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for year in years %}
+                            <a class="dropdown-item" href="{% url 'filter-by-year' year %}">{{ year }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="user d-flex m-1 w-100 justify-content-end">
+                <button type="button" class="btn btn-primary"><i class="fas fa-user-circle"></i> {{ request.user }}
+                </button>
+                <a role="button" class="btn btn-warning mx-2" href="{% url 'logout' %}">Log out</a>
+            </div>
+
+        </div>
+    {% else %}
+    <div>
+        <div class="header-wrapper d-flex bg-dark px-5">
+            <div class="my-nav d-flex">
+                <div class="home m-1">
+                    <a href="/" role="button" class="btn btn-primary">Home</a>
+                </div>
+
+                <div class="dropdown m-1">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Departments
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for department in departments %}
+                            <a class="dropdown-item"
+                               href="{% url 'filter-by-department' department %}">{{ department }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="dropdown m-1">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Years
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for year in years %}
+                            <a class="dropdown-item" href="{% url 'filter-by-year' year %}">{{ year }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endif %}
+</div>
+
+{% block content %}
+{% endblock %}
+
+{#fontawesome#}
+<script src="https://kit.fontawesome.com/0ea2bdc334.js" crossorigin="anonymous"></script>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
 </html>

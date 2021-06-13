@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="form-wrapper">
+        <form method="post" class="w-25 d-flex flex-column mx-auto my-5 justify-content-center border border-primary rounded p-4">
+            {% csrf_token %}
+            <h3 class="text-primary text-center mb-2">Register form</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Username" name="username">
+            </div>
+
+            <div class="form-group">
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password" name="password2">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}

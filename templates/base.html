@@ -53,7 +53,7 @@
 
         </div>
     {% else %}
-    <div>
+        <div>
         <div class="header-wrapper d-flex bg-dark px-5">
             <div class="my-nav d-flex">
                 <div class="home m-1">
@@ -85,12 +85,35 @@
                     </div>
                 </div>
             </div>
-    </div>
+
+            <div class="user d-flex m-1 w-100 justify-content-end">
+                <a role="button" class="btn btn-success mx-2" href="{% url 'register' %}">Register</a>
+                <a role="button" class="btn btn-primary mx-2" href="{% url 'login' %}">Log in</a>
+            </div>
+        </div>
     {% endif %}
+    </div>
 </div>
+
+
+
+{% if messages %}
+    <div class="notifications bg-light text-center" id="notification">
+        {% for mes in messages %}
+            <p class="alert alert-{{ mes.tags }} p-2"><i class="fas fa-bell mx-2"></i>{{ mes }}</p>
+        {% endfor %}
+
+    </div>
+{% endif %}
+
+
 
 {% block content %}
 {% endblock %}
+
+
+
+
 
 {#fontawesome#}
 <script src="https://kit.fontawesome.com/0ea2bdc334.js" crossorigin="anonymous"></script>
@@ -98,15 +121,25 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+
+{#inline js#}
+<script>
+    $(document).ready(function () {
+        // fade out message
+        $(".alert").delay(4000).fadeOut(500, function () {
+            $(this).alert('close');
+        });
+    })
+</script>
+
 
 </body>
 </html>

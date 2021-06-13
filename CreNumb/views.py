@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate,user_logged_out
 from django.http import HttpResponseRedirect
-
+from django.contrib.auth.models import User
+from django.dispatch import receiver
 # Create your views here.
 from CreNumb.models import ToTrinh, Room
 
@@ -88,11 +90,13 @@ def loginView(request):
         user = authenticate(username=username,password=password)
         if user and user.is_active:
             login(request,user)
+            messages.success(request,'Logged in as '+str(request.user))
             if 'next' in request.GET:
                 return HttpResponseRedirect(nexturl)
             else:
                 return HttpResponseRedirect('/')
         else:
+            messages.warning(request,'Login failed , check again username and password')
             return HttpResponseRedirect('/login/')
 
     else:
@@ -102,3 +106,32 @@ def loginView(request):
 def logoutView(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+@receiver(user_logged_out)
+def on_user_logged_out(sender, request, user, **kwargs):
+    if not user:
+        mes = ''
+    else:
+        mes = 'You have been logged out'
+    messages.add_message(request, messages.WARNING, mes)
+
+
+def registerView(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        if username and password and email:
+            user,created = User.objects.get_or_create(username=username,email=email,password=password)
+            if created:
+                user.set_password(password)
+                user.save()
+                login(request,user)
+                return HttpResponseRedirect('/')
+            else:
+                HttpResponseRedirect('/')
+        else:
+            print('incorrect input information')
+            return HttpResponseRedirect('/login/')
+    else:
+        return render(request,'CreNumb/register.html',{})
